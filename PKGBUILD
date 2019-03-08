@@ -8,8 +8,8 @@ url='https://github.com/NVIDIA/nvidia-container-runtime'
 license=('custom')
 depends=('libnvidia-container-tools')
 makedepends=('go')
-source_x86_64=('https://github.com/NVIDIA/nvidia-container-runtime/archive/v1.4.0-1.tar.gz')
-sha256sums_x86_64=('4266ae78717301ad6e38ee700a7600b908c323a7d99ea913e816e06882d1de1a')
+source=('https://github.com/NVIDIA/nvidia-container-runtime/archive/v1.4.0-1.tar.gz')
+sha256sums=('4266ae78717301ad6e38ee700a7600b908c323a7d99ea913e816e06882d1de1a')
 
 prepare() {
   mkdir -p gopath/src
