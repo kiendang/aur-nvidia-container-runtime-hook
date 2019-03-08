@@ -23,5 +23,5 @@ build() {
 package() {
   install -D -m755 "$srcdir/gopath/bin/nvidia-container-runtime-hook" "$pkgdir/usr/bin/nvidia-container-runtime-hook"
   install -D -m644 "${_srcdir}/hook/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
-  install -D -m644 "${_srcdir}/LICENSE" "$pkgdir/usr/share/$pkgname/licenses/LICENSE"
+  install -D -m644 "${_srcdir}/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
