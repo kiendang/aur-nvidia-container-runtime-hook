@@ -8,7 +8,7 @@ pkgrel=1
 pkgdesc='NVIDIA container runtime hook'
 arch=('x86_64')
 url='https://github.com/NVIDIA/nvidia-container-runtime'
-license=('custom')
+license=('BSD')
 
 makedepends=('go')
 depends=('libnvidia-container-tools')
