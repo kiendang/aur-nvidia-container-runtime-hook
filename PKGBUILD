@@ -25,7 +25,7 @@ prepare() {
 }
 
 build() {
-  GOPATH="${srcdir}/gopath" go install -buildmode=pie -ldflags " -s -w" "$pkgname"
+  GOPATH="${srcdir}/gopath" go install -buildmode=pie -ldflags " -s -w -extldflags=-Wl,-z,now,-z,relro" "$pkgname"
 }
 
 package() {
