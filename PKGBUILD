@@ -1,27 +1,29 @@
 # Maintainer: Kien Dang <mail at kien dot ai>
 # Maintainer: Joel Shapiro <jshapiro at nvidia dot com>
 
-pkgname=nvidia-container-runtime-hook
+pkgname=nvidia-container-toolkit
 
-pkgver=1.4.0
+pkgver=1.0.1
+_runtime_pkgver=3.1.0
 
 pkgrel=1
-pkgdesc='NVIDIA container runtime hook'
+pkgdesc='NVIDIA container runtime toolkit'
 arch=('x86_64')
 url='https://github.com/NVIDIA/nvidia-container-runtime'
 license=('BSD')
 
 makedepends=('go')
-depends=('libnvidia-container-tools')
+depends=('libnvidia-container-tools' 'docker>=1:19.03')
+replaces=('nvidia-container-runtime-hook' 'nvidia-docker')
 
-source=('https://github.com/NVIDIA/nvidia-container-runtime/archive/v1.4.0-1.tar.gz')
-sha256sums=('4266ae78717301ad6e38ee700a7600b908c323a7d99ea913e816e06882d1de1a')
+source=("https://github.com/NVIDIA/nvidia-container-runtime/archive/${_runtime_pkgver}.tar.gz")
+sha256sums=('9fd1fd6d39e02b1e1cd41219cf8b2e657a4f3c4fad36ee94b397fff0cb9a0865')
 
-_srcdir='nvidia-container-runtime-1.4.0-1'
+_srcdir="nvidia-container-runtime-${_runtime_pkgver}"
 
 prepare() {
   mkdir -p gopath/src
-  ln -rTsf "${_srcdir}/hook/nvidia-container-runtime-hook" "gopath/src/$pkgname"
+  ln -rTsf "${_srcdir}/toolkit/${pkgname}" "gopath/src/$pkgname"
 }
 
 build() {
@@ -29,7 +31,7 @@ build() {
 }
 
 package() {
-  install -D -m755 "${srcdir}/gopath/bin/nvidia-container-runtime-hook" "$pkgdir/usr/bin/nvidia-container-runtime-hook"
-  install -D -m644 "${_srcdir}/hook/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
+  install -D -m755 "${srcdir}/gopath/bin/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
+  install -D -m644 "${_srcdir}/toolkit/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
   install -D -m644 "${_srcdir}/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
