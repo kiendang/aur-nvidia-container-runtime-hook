@@ -8,8 +8,10 @@ pkgbase = nvidia-container-toolkit
 	makedepends = go
 	depends = libnvidia-container-tools
 	depends = docker>=1:19.03
-	replaces = nvidia-container-runtime-hook
-	replaces = nvidia-docker
+	provides = nvidia-container-runtime-hook
+	conflicts = nvidia-docker
+	conflicts = nvidia-container-runtime-hook
+	conflicts = nvidia-container-runtime<2.0.0
 	source = https://github.com/NVIDIA/nvidia-container-runtime/archive/3.1.0.tar.gz
 	sha256sums = 9fd1fd6d39e02b1e1cd41219cf8b2e657a4f3c4fad36ee94b397fff0cb9a0865
 

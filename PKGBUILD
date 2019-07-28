@@ -14,7 +14,8 @@ license=('BSD')
 
 makedepends=('go')
 depends=('libnvidia-container-tools' 'docker>=1:19.03')
-replaces=('nvidia-container-runtime-hook' 'nvidia-docker')
+conflicts=('nvidia-docker' 'nvidia-container-runtime-hook' 'nvidia-container-runtime<2.0.0')
+provides=('nvidia-container-runtime-hook')
 
 source=("https://github.com/NVIDIA/nvidia-container-runtime/archive/${_runtime_pkgver}.tar.gz")
 sha256sums=('9fd1fd6d39e02b1e1cd41219cf8b2e657a4f3c4fad36ee94b397fff0cb9a0865')
@@ -32,6 +33,12 @@ build() {
 
 package() {
   install -D -m755 "${srcdir}/gopath/bin/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
+  pushd "$pkgdir/usr/bin/"
+  ln -sf "$pkgdir/usr/bin/${pkgname}" "$pkgdir/usr/bin/nvidia-container-runtime-hook"
+  popd
   install -D -m644 "${_srcdir}/toolkit/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
+  install -D -m755 "${_srcdir}/toolkit/oci-nvidia-hook" "$pkgdir/usr/libexec/oci/hooks.d/oci-nvidia-hook"
+  install -D -m644 "${_srcdir}/toolkit/oci-nvidia-hook.json" "$pkgdir/usr/share/containers/oci/hooks.d/oci-nvidia-hook.json"
+
   install -D -m644 "${_srcdir}/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
